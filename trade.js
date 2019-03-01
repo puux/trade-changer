@@ -14,9 +14,10 @@ function changeInput(obj) {
   };
 }
 
-setInterval(function(){
+function detectTrade(){
   var arr = $(".shadow-hover");
-  if(arr.length == 3 && arr[0].offsetHeight == 34) {
+  
+  if($("select[name=res_vid1").length) {
       var lots = arr[0].childNodes[1].childNodes[1].childNodes[5].childNodes[0].onmouseover.toString().replace(/\n|}/g, "").replace(/.*<td class=h>(.*)<\/td>.*/, function(s, f){ return f; });
       var sell = arr[0].childNodes[1].childNodes[1].childNodes[3].innerHTML;
       var buy = arr[0].childNodes[1].childNodes[1].childNodes[7].innerHTML;
@@ -28,7 +29,7 @@ setInterval(function(){
       arr[0].innerHTML = '<tr><th class="c" colspan="3"></th>\
 </tr><tr>\
     <th rowspan="6" width="125"><img style="cursor: pointer;" href="#marchand.php" src="/images/starwars/mercenaries/buyers_res.png" width="120" height="120"></th>\
-    <td class="c" align="center">' + lots + '</td>\
+    <td class="c" align="center">' + lots + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + complite + '</td>\
 	<td class="c" width="120" align="center" id="maxmin">Курс обмена</td>\
 </tr>\
 <tr><th class="c" colspan="2"></th>\
@@ -42,7 +43,7 @@ setInterval(function(){
 </tr>\
 <tr><th class="c" colspan="2"></th>\
 </tr><tr>\
-    <td class="c" align="center">' + complite + '</td>\
+    <td class="c" align="center" id="max-lot" style="color: #a0a0a0">' + '' + '</td>\
 	<td class="c" align="center">' + btn + '</td>\
 </tr>\
 <tr><th class="c" colspan="3"></th>\
@@ -51,10 +52,12 @@ setInterval(function(){
     changeInput($("#sel_kol1")[0]);
     changeInput($("input[name=sel_kol2]")[0]);
     
+    $("#max-lot").html('Максимум на продажу: <span style="color: white;">' + $("#sel_kol1")[0].title.replace(/^(.*)Max: /, "") + '</span>');
+    
     $("input[type=submit]")[0].onclick = function() {
       blockClick(this);
       $("#sel_kol1").val( $("#sel_kol1").val().replace(/ /g, "") );
-      $("input[name=sel_kol2]").val( $("input[name=sel_kol2]").val().replace(/ /g, "") );
+      $("input[name=sel_kol2]").val($("input[name=sel_kol2]").val().replace(/ /g, "") );
     }
     
     $("#kurs_res1").click(function(){
@@ -64,4 +67,11 @@ setInterval(function(){
       $("input[name=sel_kol2]").val(gap(parseInt($("#kurs_res2").html())));
     });
   }
-}, 500);
+}
+
+detectTrade();
+
+if(modalFormAction) {
+  var mfa = modalFormAction;
+  modalFormAction = function(r) { mfa(r); detectTrade(); }
+}
