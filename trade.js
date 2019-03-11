@@ -34,11 +34,11 @@ function detectTrade(){
 </tr>\
 <tr><th class="c" colspan="2"></th>\
 </tr><tr>\
-	<th><font color="#CDB5CD">Продать</font> &nbsp;&nbsp;' + sell + '</th>\
+	<th><font color="#CDB5CD">Продать</font> &nbsp;&nbsp;' + sell.replace("14", "19") + '</th>\
 	<th id="kurs_res1" style="cursor: pointer">1 <font color="#CDB5CD">к</font> 4 <font color="#CDB5CD">металла</font></th>\
 </tr>\
 <tr>\
-	<th><font color="#CDB5CD">Получить</font>&nbsp;' + buy + '</th>\
+	<th><font color="#CDB5CD">Получить</font>&nbsp;' + buy.replace("14", "19") + '</th>\
 	<th id="kurs_res2" style="cursor: pointer">1 <font color="#CDB5CD">к</font> 1 <font color="#CDB5CD">алмазов</font></th>\
 </tr>\
 <tr><th class="c" colspan="2"></th>\
