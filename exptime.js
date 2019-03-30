@@ -1,5 +1,6 @@
 var scientist = false;
 var drones = 0;
+var locators = 0;
 var expTech = 0;
 var loaded = false;
 
@@ -37,7 +38,10 @@ function detectExp(){
       loaded = true;
 
       $.get("user.php", function(data){
-        scientist = data.indexOf("Ученый") > 0;
+        var spS = data.indexOf("Ученый");
+        var spF = data.indexOf("Летчик");
+        var spM = data.indexOf("Шахтер");
+        scientist = spS < spF && spS < spM;
 
         $.get("imperium.php", function(data){
           var arr = data.replace("\n", "").match(/Экспедиционная технология<\/font>&nbsp;&nbsp;<a href=(index\.php#b|b)uildings\.php\?mode=research&cp=([\d]+)&amp;re=0&amp;planettype=3>([\d]+)<\/a>/);
@@ -46,6 +50,9 @@ function detectExp(){
           arr = data.replace("\n", "").match(/Дроны<\/font>&nbsp;&nbsp;<a href=(index\.php#u|u)ser\.php\?art=art_dron>([\d]+)<\/a>/);
           if(arr)
             drones = parseInt(arr[2]);
+          arr = data.replace("\n", "").match(/Локаторы<\/font>&nbsp;&nbsp;<a href=(index\.php#u|u)ser\.php\?art=art_lokator>([\d]+)<\/a>/);
+          if(arr)
+            locators = parseInt(arr[2]);
 
           detectExp();
         });
@@ -73,10 +80,10 @@ function detectExp(){
         var result = fmt(Math.round(minutes));
         var seb = expTech + hour;
 
-        var killAll = 0.02 - 0.002*seb;
+        var killAll = 0.02 - 0.002*(seb-1 + locators);
         if(killAll < 0) killAll = 0;
 
-        var killPart = 0.03 - 0.0012*seb;
+        var killPart = 0.03 - 0.0012*(seb-1 + locators);
         if(killPart < 0) killPart = 0;
 
         if(killAll || killPart) {
