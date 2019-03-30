@@ -1,0 +1,13 @@
+.close-btn {
+    background-image: url('https://xgame-online.com/images/icons_min.png');
+    background-position-x: -182px;
+    background-position-y: -1px;
+    width: 13px;
+    height: 13px;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+.close-btn:hover {
+    background-position-y: -17px;
+}

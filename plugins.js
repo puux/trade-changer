@@ -5,7 +5,9 @@ var pluginList = [
     { name: "sim", url: "10288-uluchshenie-ui-chitabelnost-poley-v-simulyatore", title: "Улучшение симулятора", info: "Форматирование чисел и расширение полей ввода" },
     { name: "total", url: "10286-uluchshenie-ui-svodnaya-tablitsa-po-resursam", title: "Сводка ресурсов", info: "Отображает в табличном виде ресурсы со всех планет<br><br>Активация по клавише <b>G</b>" },
     { name: "trade", url: "10283-uluchshenie-ui-razdela-torgovlya", title: "Улучшение торга", info: "Делает форму создания лота в меню Торговля более удобной и информативной" },
-    { name: "exptime", url: "", title: "Время в экспедиции", info: "Отображает реальное время, которое флот проведет в экспедиции, в выпадающем списке формы отправки флота, а так же запоминает последний выбор" },
+    { name: "exptime", url: "10359-plagin-vremya-poleta-v-ekspeditsii", title: "Время в экспедиции", info: "Отображает реальное время, которое флот проведет в экспедиции, в выпадающем списке формы отправки флота, а так же запоминает последний выбор" },
+    { name: "padscale", url: "10360-plagin-masshtab-stranitsy-v-planshetah", title: "Масштаб на планшетах", info: "Изменяет масштаб страницы на планшете для более компактного размещения элементов" },
+    { name: "gview", url: "10361-plagin-listanie-galaktik-na-telefone", title: "Листание галактик", info: "Позволяет листать галактики свайпом влево/вправо. Актуально только для телефонов." },
 ];
 
 function debug(data) {
@@ -20,6 +22,12 @@ function savePlugins() {
     }
     document.location.reload();
 }
+
+/********************************************************************************** 
+ * Environment
+*/
+
+var isNewStyle;
 
 /********************************************************************************** 
  * DIALOG API
@@ -83,12 +91,15 @@ function injectOptions(oldStyle) {
             if(!pluginList[i].user || userID == pluginList[i].user)
                 text += '<tr>\
                     <th onmouseover="return overlib(\'<table width=200><tr><td class=h><font color=#CDB5CD>' + pluginList[i].info + '</font></td></tr></table>\');" onmouseout="return nd();">' + pluginList[i].title + '</th>\
-                    <th><a target="_blank" title="Обсудить дополнение на форуме XGame" href="https://forum.xgame-online.com/topic/' + pluginList[i].url + '/"><div class="icons_min icons_min_message">&nbsp;</div></a></th>\
+                    <th><a target="_blank" title="Обсудить дополнение на форуме XGame" href="https://forum.xgame-online.com/topic/' + pluginList[i].url + '/"><div class="icons_min icons_min_info">&nbsp;</div></a></th>\
                     <th style="width: 20px;"><input type="checkbox" style="cursor: pointer;" id="p_' + pluginList[i].name + '"></th>\
                     </tr>';
         }
 
         var doc = document.createElement("table");
+        if(!isNewStyle) {
+            doc.style.marginBottom = "30px";
+        }
         doc.width = 570;
         doc.className = "shadow-hover";
         doc.innerHTML = '<tr><th colspan="3"></th></tr>\
@@ -123,6 +134,8 @@ function injectOptions(oldStyle) {
 }
 
 $(document).ready(function () {
+    isNewStyle = document.getElementById("stars") != null;
+
     for(var i in pluginList) {
         var pname = "p_" + pluginList[i].name;
         if(window.localStorage.getItem(pname) == "true") {

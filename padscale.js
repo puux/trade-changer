@@ -1,0 +1,1 @@
+$("meta[name=viewport]").attr("content", "width=570px,initial-scale=1");
