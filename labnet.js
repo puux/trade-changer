@@ -65,7 +65,7 @@ function switchLabPanel() {
         var labSci = oldStyle ? '' : 'index.php#';
         
         var text = '<table style="width: 100%;" cellspacing="1">\
-        <tr><td class="c" colspan="3" style="height: 20px;"><div style="display: flex;"><div style="flex-grow: 1; cursor: move; user-select: none;" onmousedown="beginMove(event, \'lab-panel\')">Исследовательская сеть</div><div style="padding: 0 7px; cursor: pointer;" title="Закрыть форму" onclick="switchLabPanel()">X</div></div></td></tr>\
+        <tr><td class="c" colspan="3" style="height: 20px;"><div style="display: flex;"><div style="flex-grow: 1; cursor: move; user-select: none;" onmousedown="beginMove(event, \'lab-panel\')">Исследовательская сеть</div><div class="close-btn" title="Закрыть форму" onclick="switchLabPanel()"></div></div></td></tr>\
               <tr><th colspan="3"></th></tr>';
         if(labIndex > 0) {
           var lab = doc.getElementById("planet_koord").parentNode.childNodes[labIndex];
@@ -102,7 +102,7 @@ function switchLabPanel() {
               
               var url = oldStyle ? 'buildings.php?gid=31&cp=' + cp : 'index.php?cp=' + cp + '&re=0#buildings.php?gid=31';
               text += '<tr>\
-                    <th style="width: 20px;">' + (i == 1 ? "" : images.childNodes[i].innerHTML.replace(/^[0-9]{1,2}/, "").replace("zeroAbsolute", "").replace(/style="width:(.*)px;"/, 'style="width: 16px; height: 16px; background-size: 32px; display: block;"').replace('class="marg"', 'class="marg" style="width: 20px;"')) + '</th>\
+                    <th style="width: 20px;">' + (i == 1 ? "" : images.childNodes[i].innerHTML.replace(/^[0-9]{1,2}/, "").replace("zeroAbsolute", "").replace(/style="width:(.*)px;"/, 'style="width: 16px; height: 16px; background-size: 32px; display: inline-block;"').replace('class="marg"', 'class="marg" style="width: 20px;"')) + '</th>\
                     <th>' + node.childNodes[i].innerHTML + '</th>\
                     <th><a style="' + (labFlagArray[i-2] ? "color: yellow;" : "") + '" href="' + url + '">' + (i == 1 ? "Ур." : (labArray[i-2] || "-")) + '</a></th>\
                     </tr>';
