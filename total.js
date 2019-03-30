@@ -37,7 +37,7 @@ function switchTotalResDlg() {
               totalU = arr[2];
             }
             text += '<tr>\
-                  <th>' + (i == 1 ? "" : images.childNodes[i].innerHTML.replace(/^[0-9]{1,2}/, "").replace("zeroAbsolute", "").replace(/style="width:(.*)px;"/, 'style="width: 16px; height: 16px; background-size: 32px; display: block;"').replace('class="marg"', 'class="marg" style="width: 20px;"')) + '</th>\
+                  <th>' + (i == 1 ? "" : images.childNodes[i].innerHTML.replace(/^[0-9]{1,2}/, "").replace("zeroAbsolute", "").replace(/style="width:(.*)px;"/, 'style="width: 16px; height: 16px; background-size: 32px; display: inline-block;"').replace('class="marg"', 'class="marg" style="width: 20px;"')) + '</th>\
                   <th>' + node.childNodes[i].innerHTML + '</th>\
                   <th>' + metal.childNodes[i].innerHTML.replace(/<font color="#CDB5CD">\/(.*)</, "<") + '</th>\
                   <th>' + cry.childNodes[i].innerHTML.replace(/<font color="#CDB5CD">\/(.*)</, "<") + '</th>\
