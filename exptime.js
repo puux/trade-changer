@@ -75,7 +75,7 @@ function detectExp(){
     for(var i = 0; i < sel.childNodes.length; i++) {
       if(sel.childNodes[i].value) {
         var hour = parseInt(sel.childNodes[i].value);
-        var minutes = hour*(scientist ? 45 : 60);
+        var minutes = hour*(scientist ? 51 : 60);
         minutes -= minutes*drones*0.03;
         var result = fmt(Math.round(minutes));
         var seb = expTech + hour;
