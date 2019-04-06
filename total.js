@@ -20,7 +20,7 @@ function switchTotalResDlg() {
         var uran = doc.getElementById("planet_koord").parentNode.childNodes[13];
         
         var text = '<table style="width: 100%;" cellspacing="1">\
-             <tr><td class="c" colspan="5" style="height: 20px;"><div style="display: flex;"><div style="flex-grow: 1; cursor: move; user-select: none;" onmousedown="dlgBeginMove(event, \'res-panel\')">Сводка по ресурсам</div><div style="padding: 0 7px; cursor: pointer;" title="Закрыть форму" onclick="switchTotalResDlg()">X</div></div></td></tr>\
+             <tr><td class="c" colspan="5" style="height: 20px;"><div style="display: flex;"><div style="flex-grow: 1; cursor: move; user-select: none;" onmousedown="dlgBeginMove(event, \'res-panel\')">Сводка по ресурсам</div><div class="close-btn" title="Закрыть форму" onclick="switchTotalResDlg()"></div></div></td></tr>\
              <tr><th colspan="5"></th>';
         
         var totalM = "";
