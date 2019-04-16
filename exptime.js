@@ -23,7 +23,7 @@ function fmtZero(value) {
 }
 
 function fmtTime(value) {
-    var s = value%60;
+    var s = Math.round(value%60);
     var m = Math.floor(value/60)%60;
     var h = Math.floor(value/3600);
 
@@ -64,7 +64,7 @@ function detectExp(){
     sel.title = "Время в экспедиции (частичная потеря / полная потеря)";
     sel.parentNode.childNodes[2].nodeValue = "";
     sel.onchange = function() {
-        var minutes = parseInt(this.value)*(scientist ? 45 : 60);
+        var minutes = parseInt(this.value)*(scientist ? 51 : 60);
         minutes -= minutes*drones*0.03;
 
         $("table")[0].childNodes[0].childNodes[7].childNodes[0].childNodes[0].innerHTML = fmtTime(timeFly*2 + minutes*60);
