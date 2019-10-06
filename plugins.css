@@ -1,4 +1,4 @@
-.close-btn {
+.close-btn, .params-btn {
     background-image: url('https://xgame-online.com/images/icons_min.png');
     background-position-x: -182px;
     background-position-y: -1px;
@@ -8,6 +8,367 @@
     margin-right: 4px;
 }
 
-.close-btn:hover {
+.params-btn { background-position-x: -195px; }
+
+.close-btn:hover, .params-btn:hover {
     background-position-y: -17px;
 }
+
+.light {
+    background-image: url('https://xgame-online.com/images/icons_min.png');
+    background-position-x: -104px;
+    width: 15px;
+    height: 15px;
+}
+
+.light[on] {
+    background-position-y: -17px;
+}
+
+.std-box {
+    background-color: #344566;
+    border: 1px solid #415680;
+}
+
+.std-title-box {
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border: 1px solid #415680;
+    color: #E6EBFB;
+    padding-left: 3px;
+    background-image: url('https://xgame-online.com/img/bg1.gif');
+    text-align: center;
+}
+
+.main-menu {
+    display: flex;
+    flex-direction: row;
+    max-width: 570px;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.main-menu .leftmenu {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #344566;
+    cursor: pointer;
+}
+
+.main-menu .leftmenu .leftmenu-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url(https://xgame-online.com/images/planets/mini_planets.png);
+    background-size: 64px;
+}
+
+.main-menu .leftmenu:hover {
+    box-shadow: inset 0 0 6px 1px #ffffff38;
+}
+
+.main-menu .leftmenu .planet-menu {
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    position: relative;
+    top: 36px;
+    left: -5px;
+    width: 209px;
+    color: #E6EBFB;
+    font-family: Tahoma,sans-serif;
+    background-color: black;
+    box-shadow: 0 0 17px 4px black;
+}
+
+.main-menu .leftmenu .planet-menu .item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3px;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 200px;
+}
+
+.main-menu .leftmenu .planet-menu .item:hover {
+    box-shadow: inset 0 0 6px 1px #ffffff38;
+}
+
+.main-menu .leftmenu .planet-menu .item a {
+    font-weight: normal;
+    display: block;
+}
+
+.main-menu .leftmenu .planet-menu .item .planet-moon {
+    width: 22px;
+    height: 22px;
+    margin-right: 4px;
+    background-image: url(https://xgame-online.com/images/planets/mini_moon.png);
+}
+
+.main-menu .leftmenu .planet-menu .item .cur-moon {
+    background-position-x: right;
+}
+
+.main-menu .leftmenu .planet-menu .item .planet-link {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+}
+
+.main-menu .leftmenu .planet-menu .item .planet-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url(https://xgame-online.com/images/planets/mini_planets.png);
+    background-size: 64px;
+    margin-right: 5px;
+}
+
+.main-menu .leftmenu .planet-menu .item .cur-planet {
+    background-position-x: 32px;
+}
+
+.main-menu .rightmenu {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #344566;
+    cursor: pointer;
+}
+
+.main-menu .rightmenu:hover {
+    box-shadow: inset 0 0 6px 1px #ffffff38;
+}
+
+.main-menu .rightmenu .rightmenu-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url(http://xg.f2h.ru/xgame/img/1486395871-menu_80607.png);
+    background-size: 32px;
+}
+
+.main-menu .time {
+    flex-grow: 1;
+    font-weight: bold;
+    color: #f8b600;
+    text-align: center;
+    box-shadow: inset 6px 0px 10px -4px #6783b9, inset -6px 0px 10px -4px #6783b9;
+    font-size: 18px;
+    padding-top: 10px;
+}
+
+
+
+.main-menu .rightmenu .tools-menu {
+    display: none;
+    z-index: 1000;
+    position: relative;
+    top: 36px;
+    left: -450px;
+    width: 486px;
+    color: #E6EBFB;
+    font-family: Tahoma,sans-serif;
+    background-color: black;
+    box-shadow: 0 0 17px 4px black;
+}
+
+.main-menu .rightmenu .content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.main-menu .rightmenu .tools-menu .item {
+    padding: 7px;
+    display: flex;
+    align-items: center;
+    width: 145px;
+    margin-top: 1px;
+    margin-left: 1px;
+}
+
+.main-menu .rightmenu .tools-menu .item > div {
+    height: 26px;
+    overflow: hidden;
+}
+
+.main-menu .rightmenu .tools-menu .item > div > div {
+    width: 26px;
+    height: 52px;
+    margin-right: 10px;
+    background-image: url(https://xgame-online.com/images/icons_26.png);
+    background-repeat: no-repeat;
+}
+
+.main-menu .rightmenu .tools-menu .item:hover {
+    box-shadow: inset 0 0 6px 1px #ffffff38;
+}
+
+.main-menu .rightmenu .tools-menu .item:hover > div > div {
+    margin-top: -26px;
+}
+
+.icon-profile { background-position: -26px -52px; }
+.icon-friends { background-position: -390px 0px; }
+.icon-ignore { background-position: 0px -104px; }
+.icon-ref { background-position: -442px 0px; }
+.icon-hall { background-position: -130px 0px; }
+.icon-dock { background-position: -468px 0px; }
+.icon-quest { background-position: -572px -52px; }
+.icon-questions { background-position: -520px 0px; }
+.icon-savekb { background-position: -208px 0px; }
+.icon-allykasse { background-position: -676px 0px; }
+.icon-auction { background-position: -260px 0px; }
+.icon-market { background-position: -598px -52px; }
+.icon-marchand { background-position: -494px -52px; }
+.icon-vip { background-position: -312px 0px; }
+.icon-shop { background-position: -338px 0px; }
+.icon-stavki { background-position: -156px 0px; }
+.icon-banned { background-position: -182px 0px; }
+.icon-notes { background-position: -364px 0px; }
+.icon-fleetshortcut { background-position: -130px -52px; }
+.icon-overview { background-position: -26px -104px; }
+.icon-relax { background-position: -624px -52px; }
+.icon-chat { background-position: -208px -52px; }
+.icon-rules { background-position: -468px -52px; }
+.icon-news { background-position: -286px -52px; }
+.icon-messages { background-position: -234px -52px; }
+.icon-forum { background-position: -416px 0px; }
+.icon-vk { background-position: -52px -104px; }
+.icon-spellage { background-position: -52px -52px; }
+.icon-logout { background-position: -546px 0px; }
+.icon-portal { background-position: -78px -52px; }
+
+.main-menu .rightmenu .tools-menu  a {
+    font-weight: normal;
+    display: block;
+}
+
+/*chat styles*/
+
+.chat-panel {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+}
+
+.chat-panel > div {
+    margin-top: 1px;
+}
+
+.chat-panel > div:first-child {
+    margin-top: 0;
+}
+
+.chat-panel .vc-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-panel .chat-content {
+    position: relative;
+    flex-grow: 1;
+}
+
+.chat-panel .chat-content #xg-chat-messages {
+    position: absolute;
+    overflow-y: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.chat-panel .players {
+    font-weight: bold;
+    font-family: Tahoma,sans-serif;
+    font-size: 11px;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.chat-panel .players > div {
+    padding: 2px 3px;
+    cursor: pointer;
+}
+
+.chat-panel .players > div:hover {
+    background-color: #253148;
+}
+
+.chat-line {
+    padding: 5px;
+    background-color: #253148;
+    margin: 3px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.msg-1 { background-color: #232323; }
+.msg-2 { background-color: #921515; }
+
+.chat-line .chat-title {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+}
+
+.chat-line .chat-title .chat-time {
+    color: gray;
+}
+
+.chat-line .chat-title .chat-login {
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+.chat-line .chat-text {
+    
+}
+
+.chat-input {
+    font-size: 12px;
+    width: 100%;
+    padding: 0 3px;
+    height: 18px;
+    box-sizing: border-box;
+    resize: none;
+    overflow: hidden;
+}
+
+/*animations*/
+
+@keyframes flip {
+    from {
+      transform: scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, -360deg);
+      animation-timing-function: ease-out;
+    }
+    50% {
+        transform: scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, 0deg);
+        animation-timing-function: ease-in;
+    }
+    to {
+      transform: scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, 0deg);
+      animation-timing-function: ease-in;
+    }
+  }
+
+  .flip {
+    animation: flip 2s infinite ease-in-out;
+    animation-delay: 1s;
+    animation-duration: 3s;
+  }
