@@ -16,7 +16,7 @@ function getValidSystem(value) {
 }
 
 if(!isNewStyle) {
-    var arr = $("input[name=system]");
+    var arr = $("input[name=system][type=text]");
     if(arr.length == 1) {
         var element = $("table")[2];
         element.style.overflow = "hidden";
@@ -55,8 +55,9 @@ if(!isNewStyle) {
                         }
                     });
                     $.get(gotoSystem(galaxy, result), function(data) {
-                        var arr = data.match(/<\/script><table(.*)ю<\/font><\/a> \]<\/th><\/tr>/gs);
-                        content = arr[0].substring(28);
+                        //var arr = data.match(/<\/script><table(.*)ю<\/font><\/a> \]<\/th><\/tr>/gs);
+                        var arr = data.match(/<\/script><table(.*)<table width="570" class=shadow-hover>/gs);
+                        content = arr[0].substring(28, arr[0].length-38);
                         $("input[name=system]").val(result);
                         var iTd = $("input[name=system]").parent();
                         iTd.prev().children().attr("href", gotoSystem(galaxy, getValidSystem(result-1)));
