@@ -78,7 +78,7 @@ function detectExp(){
         var minutes = hour*(scientist ? 51 : 60);
         minutes -= minutes*drones*0.03;
         var result = fmt(Math.round(minutes));
-        var seb = expTech + hour;
+        var seb = expTech + Math.min(10, hour);
 
         var killAll = 0.02 - 0.002*(seb-1 + locators);
         if(killAll < 0) killAll = 0;
