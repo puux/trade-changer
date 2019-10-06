@@ -14,6 +14,11 @@ function changeInput(obj) {
   };
 }
 
+function _set_max(value) {
+  $('#sel_kol1').val(gap(value));
+  $("#sel_kol1")[0].onkeyup();
+}
+
 function detectTrade(){
   var arr = $(".shadow-hover");
   
@@ -52,7 +57,8 @@ function detectTrade(){
     changeInput($("#sel_kol1")[0]);
     changeInput($("input[name=sel_kol2]")[0]);
     
-    $("#max-lot").html('Максимум на продажу: <span style="color: white;">' + $("#sel_kol1")[0].title.replace(/^(.*)Max: /, "") + '</span>');
+    var max = $("#sel_kol1")[0].title.replace(/^(.*)Max: /, "");
+    $("#max-lot").html('Максимум на продажу: <span style="color: white;"><span style="cursor: pointer;" onclick="_set_max(' + max.replace(/&nbsp;|\ /g, "") + ')">' + max + '</span></span>');
     
     $("input[type=submit]")[0].onclick = function() {
       blockClick(this);
