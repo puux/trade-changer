@@ -105,9 +105,15 @@
 
 .main-menu .leftmenu .planet-menu .item .planet-moon {
     width: 22px;
-    height: 22px;
+    height: 32px;
     margin-right: 4px;
     background-image: url(https://xgame-online.com/images/planets/mini_moon.png);
+    background-repeat: no-repeat;
+    background-position-y: 6px;
+}
+
+.main-menu .leftmenu .planet-menu .item .planet-moon:hover {
+    background-position-x: right;
 }
 
 .main-menu .leftmenu .planet-menu .item .cur-moon {
@@ -118,6 +124,10 @@
     display: flex;
     flex-grow: 1;
     align-items: center;
+}
+
+.main-menu .leftmenu .planet-menu .item .planet-link:hover .planet-icon {
+    background-position-x: 32px;
 }
 
 .main-menu .leftmenu .planet-menu .item .planet-icon {

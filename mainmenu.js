@@ -6,25 +6,41 @@ var planets = '<div class="planet-menu"><div class="content">';
 var tagOpened = false;
 var numPlanets = 0;
 var itemIndex = 0;
+var currentIconStyle = "";
+var headerTitle = "";
 for(var i = 0; i < arr[0].childNodes.length; i++) {
   var node = arr[0].childNodes[i];
   if(node.tagName == "OPTION") {
     var current = arr[0].selectedIndex == itemIndex;
-    var name = node.innerHTML;
-    var isMoon = name.indexOf("]*") > 0;
+    var planetName = node.innerHTML;
+    var isMoon = planetName.indexOf("]*") > 0;
     if(isMoon) {
       planets += '<a class="planet-moon ' + (current ? "cur-moon" : "") + '" href="' + node.value + '"></a></div>';
       tagOpened = false;
+      if(current) {
+        currentIconStyle = 'background-image: url(\'' + node.getAttribute("image") + '\');';
+        if(node.getAttribute("image") != "/images/planets/moon.png")
+          currentIconStyle += "background-size: 32px;";
+      }
     }
     else {
       if(tagOpened) {
         planets += '<div class="moon-empty"></div></div>';
       }
-      var b = 32*numPlanets;
-      planets += '<div class="item std-box"><a class="planet-link" href="' + node.value + '"><div class="planet-icon ' + (current ? "cur-planet" : "") + '" style="background-position-y: -' + b + 'px;"></div><div>' + name + '</div></a>';
+      var b = 32*(parseInt(node.getAttribute("y"))/44);
+      var style = node.getAttribute("y") ? 'background-position-y: ' + b + 'px;' : "background-size: 32px;";
+      var image = node.getAttribute("image");
+      if(image != "/mini_planets.png")
+        style += 'background-image: url(\'' + image + '\');';
+      if(current)
+        currentIconStyle = style;
+
+      planets += '<div class="item std-box"><a class="planet-link" href="' + node.value + '"><div class="planet-icon ' + (current ? "cur-planet" : "") + '" style="' + style + '"></div><div>' + planetName + '</div></a>';
       tagOpened = true;
       numPlanets ++;
     }
+    if(current)
+      headerTitle = planetName;
     
     itemIndex ++;
   }
@@ -39,14 +55,22 @@ if(tagOpened) {
 planets += '</div></div>';
 
 window.xgShowLeftMenu = function() {
-  window.removeEventListener("click", closeLeftMenu);
-  $(".planet-menu").slideDown('fast');
-  setTimeout(function(){ window.addEventListener("click", closeLeftMenu);}, 1);
+  if($(".planet-menu").css("display") == "none") {
+    window.removeEventListener("click", closeLeftMenu);
+    $(".planet-menu").slideDown('fast');
+    setTimeout(function(){ window.addEventListener("click", closeLeftMenu);}, 1);
+  }
+  else {
+    $(".planet-menu").css("display", "none");
+    window.removeEventListener("click", closeLeftMenu);
+  }
 }
 
-function closeLeftMenu() {
+function closeLeftMenu(event) {
+  event.preventDefault();
   $(".planet-menu").css("display", "none");
   window.removeEventListener("click", closeLeftMenu);
+  return false;
 }
 
 var cmdItems = [
@@ -88,15 +112,23 @@ for(var i in cmdItems)
 commands += '</div></div>';
 
 window.xgShowRightMenu = function() {
-  window.removeEventListener("click", closeRightMenu);
-  $(".tools-menu").slideDown('fast');
-  setTimeout(function(){ window.addEventListener("click", closeRightMenu);}, 1);
+  if($(".tools-menu").css("display") == "none") {
+    window.removeEventListener("click", closeRightMenu);
+    $(".tools-menu").slideDown('fast');
+    setTimeout(function(){ window.addEventListener("click", closeRightMenu);}, 1);
+  }
+  else {
+    $(".tools-menu").css("display", "none");
+    window.removeEventListener("click", closeRightMenu);
+  }
 }
 
 function closeRightMenu() {
+  event.preventDefault();
   $(".tools-menu").css("display", "none");
   window.removeEventListener("click", closeRightMenu);
+  return false;
 }
 
 bar.removeClass("row").addClass("main-menu").parent().css("overflow", "inherit");
-bar.html('<div class="leftmenu" onclick="window.xgShowLeftMenu();"><div class="leftmenu-icon">' + planets + '</div></div><div class="time" id="times">00:00:00</div><div class="rightmenu" onclick="window.xgShowRightMenu();"><div class="rightmenu-icon">' + commands + '</div></div>');
+bar.html('<div class="leftmenu" onclick="window.xgShowLeftMenu();"><div class="leftmenu-icon" style="' + currentIconStyle + '">' + planets + '</div></div><div class="time" style="display: flex; padding: 0 14px; align-items: center; text-shadow: 2px 2px 2px black;"><div>' + headerTitle + '</div><span id="times" style="flex-grow: 1; text-align: right;">00:00:00</span></div><div class="rightmenu" onclick="window.xgShowRightMenu();"><div class="rightmenu-icon" style="background-image: url(https://xgame.f2h.ru/img/menu.png)">' + commands + '</div></div>');
