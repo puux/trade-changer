@@ -18,6 +18,8 @@ var pluginList = [
 var pluginListBeta = [
     { name: "mainmenu", url: "10322-plaginy-k-igre", title: "Главное меню", info: "Заменяет меню планет и команд в мобильной версии на более компактное и удобное меню" },
     { name: "chat", url: "10322-plaginy-k-igre", title: "Чат XGame", info: "Обычный чат с отображением пользователей online и возможностью создать свой канал для общения вдвоем или с несколькими участниками сразу" },
+    { name: "alysab", url: "10322-plaginy-k-igre", title: "САБ с альянсом", info: "Позволяет быстро добавлять членов яльянса в САБ" },
+    { name: "targetlist", url: "10322-plaginy-k-igre", title: "Список целей", info: "Ведет учет целей для атаки с подсчетом вывозимых ресурсов и силы" },
 ];
 
 function isBetaTester() {
@@ -62,7 +64,7 @@ else {
  * DIALOG API
 */
 
-var __zIndex = 20;
+var __zIndex = 40;
 var __moveObject = null;
 var ___sliderDragObj = null;
 function __formMove(event) {
@@ -92,7 +94,7 @@ function dlgBeginMove(event, obj) {
 
 function dlgCreate(name) {
     var dlg = document.createElement("div");
-    dlg.setAttribute('style', 'width: 400px; position: fixed; left: 30%; top: 15%; z-index: 16; box-shadow: 0 0 5px 0px black; background-color: black; display: none;');
+    dlg.setAttribute('style', 'width: 400px; position: fixed; left: 30%; top: 15%; z-index: ' + __zIndex + '; box-shadow: 0 0 5px 0px black; background-color: black; display: none;');
     dlg.id = name;
     document.body.appendChild(dlg);
 
@@ -190,7 +192,7 @@ function xgClosePluginInfo() {
  */
 function xgNeedShowInfo() {
     var a = window.localStorage.getItem(XG_PLUGIN_AMOUNT_KEY);
-    return !isSimulate && isBetaTester() && (a == null && !havePlugins && Math.random() < 0.001 || a != null && a != pluginList.length);
+    return !isSimulate && (a == null && !havePlugins && Math.random() < 0.001 || a != null && a < pluginList.length);
 }
 
 var havePlugins = false;
@@ -202,7 +204,15 @@ $(document).ready(function () {
         var pname = "p_" + pluginList[i].name;
         if(window.localStorage.getItem(pname) == "true") {
             console.log("Load plugin:", pluginList[i].title);
-            $.getScript("https://xgame.f2h.ru/" + pluginList[i].name + ".js?u=" + userID);
+            if(!installPlugin(pluginList[i].name)) {
+                var url = "https://xgame.f2h.ru/" + pluginList[i].name + ".js?u=" + userID;
+                $.ajax({
+                    url: url,
+                    dataType: "script",
+                    cache: true
+                });
+                //$.getScript(url);
+            }
             havePlugins = true;
         }
     }
@@ -219,7 +229,7 @@ $(document).ready(function () {
         var text = '<table style="width: 100%;" cellspacing="1"><tr><td class="c" style="height: 20px;"><div style="display: flex;"><div style="flex-grow: 1; cursor: move; user-select: none;" onmousedown="dlgBeginMove(event, \'xg-plug-info\')">Плагины к игре</div><div class="close-btn" title="Закрыть форму" onclick="xgClosePluginInfo()"></div></div></td></tr>\
           <tr><th></th></tr>';
         var a = window.localStorage.getItem(XG_PLUGIN_AMOUNT_KEY);
-        if(a != null && a != pluginList.length)
+        if(a != null && a < pluginList.length)
             text += '<tr><th>В настройках доступны для подключения новые плагины. Вы хотите узнать о них больше?</th></tr>';
         else
             text += '<tr><th>Вы знаете о том, что в настройках игры есть раздел с плагинами, подключая которые вы можете менять и улучшать те или иные части интерфейса игры?</th></tr>';
@@ -230,3 +240,7 @@ $(document).ready(function () {
         dlgShow("xg-plug-info");
     }
 });
+
+function installPlugin(name) {
+    return false;
+}
