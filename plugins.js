@@ -195,6 +195,24 @@ function xgNeedShowInfo() {
     return !isSimulate && (a == null && !havePlugins && Math.random() < 0.001 || a != null && a < pluginList.length);
 }
 
+function xgSendPluginMetrics() {
+    var key = "xg_plug_stat_" + universe;
+    var lst = window.localStorage.getItem(key);
+    var curTime = new Date().getTime();
+    if(curTime > lst + 3600*24) {
+        window.localStorage.setItem(key, curTime);
+        var sendList = "";
+        for(var i in pluginList) {
+            var pname = "p_" + pluginList[i].name;
+            if(window.localStorage.getItem(pname) == "true") {
+                if(sendList) sendList += ",";
+                sendList += pluginList[i].name;
+            }
+        }
+        $.get("https://xgame.f2h.ru/api/pluginmetric.php?uni=" + universe + "&uid=" + userID + "&plug=" + sendList);
+    }
+}
+
 var havePlugins = false;
 
 $(document).ready(function () {
@@ -216,6 +234,8 @@ $(document).ready(function () {
             havePlugins = true;
         }
     }
+
+    xgSendPluginMetrics();
 
     if(window.modalFormAction) {
         var mfa = modalFormAction;
