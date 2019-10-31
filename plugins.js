@@ -235,7 +235,8 @@ $(document).ready(function () {
         }
     }
 
-    xgSendPluginMetrics();
+    if(!isSimulate)
+        xgSendPluginMetrics();
 
     if(window.modalFormAction) {
         var mfa = modalFormAction;
