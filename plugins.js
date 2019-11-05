@@ -197,7 +197,7 @@ function xgNeedShowInfo() {
 
 function xgSendPluginMetrics() {
     var key = "xg_plug_stat_" + universe;
-    var lst = window.localStorage.getItem(key);
+    var lst = parseInt(window.localStorage.getItem(key));
     var curTime = new Date().getTime();
     if(curTime > lst + 3600*24) {
         window.localStorage.setItem(key, curTime);
