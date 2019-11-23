@@ -64,14 +64,17 @@ function detectExp(){
     sel.title = "Время в экспедиции (частичная потеря / полная потеря)";
     sel.parentNode.childNodes[2].nodeValue = "";
     sel.onchange = function() {
-        var minutes = parseInt(this.value)*(scientist ? 51 : 60);
+      if(window.localStorage["xg-save-time"] == "true")
+        window.localStorage["exptime"] = this.value;
+
+      var minutes = parseInt(this.value)*(scientist ? 51 : 60);
         minutes -= minutes*drones*0.03;
 
-        $("table")[0].childNodes[0].childNodes[7].childNodes[0].childNodes[0].innerHTML = fmtTime(timeFly*2 + minutes*60);
-        $("table")[0].childNodes[0].childNodes[7].childNodes[3].childNodes[0].innerHTML = fmtTime(timeFly + minutes*60);
+        $("table")[isNewStyle ? 0 : 1].childNodes[0].childNodes[7].childNodes[0].childNodes[0].innerHTML = fmtTime(timeFly*2 + minutes*60);
+        $("table")[isNewStyle ? 0 : 1].childNodes[0].childNodes[7].childNodes[3].childNodes[0].innerHTML = fmtTime(timeFly + minutes*60);
         //console.log(timeFly, minutes, fmtTime(timeFly*2 + minutes*60))
-        window.localStorage["exptime"] = this.value;
     }
+    var currentIndex = 0;
     for(var i = 0; i < sel.childNodes.length; i++) {
       if(sel.childNodes[i].value) {
         var hour = parseInt(sel.childNodes[i].value);
@@ -93,13 +96,25 @@ function detectExp(){
             result += ' (' + rnd(killPart) + '%)';
         }
         sel.childNodes[i].innerHTML = result;
+
+        currentIndex++;
+        if(currentIndex == 10) {
+          sel.childNodes[i].style.fontWeight = "bold";
+          sel.childNodes[i].title = "Экспедиция с максимальным СЭБ";
+        }
       }
     }
+    
+    $(sel).parent().append('<input type="checkbox" style="float: right; width: 16px; cursor: pointer;" title="Запоминать выбор" id="xg-save-time">');
+    $("#xg-save-time").on("input", function(event){
+      window.localStorage["xg-save-time"] = event.target.checked;
+    }).attr('checked', window.localStorage["xg-save-time"] == "true");
 
-    var time = $("table")[0].childNodes[0].childNodes[7].childNodes[3].childNodes[0].innerHTML.split(":");
+    if(window.localStorage["exptime"] && window.localStorage["xg-save-time"] == "true")
+        sel.value = parseInt(window.localStorage["exptime"]);
+
+    var time = $("table")[isNewStyle ? 0 : 1].childNodes[0].childNodes[7].childNodes[3].childNodes[0].innerHTML.split(":");
     var timeFly = time[0] * 3600 + time[1] * 60 + time[2] * 1;
-    if(window.localStorage["exptime"])
-        sel.value = window.localStorage["exptime"];
     sel.onchange();
   }
 }
