@@ -199,7 +199,7 @@ function xgSendPluginMetrics() {
     var key = "xg_plug_stat_" + universe;
     var lst = parseInt(window.localStorage.getItem(key));
     var curTime = new Date().getTime();
-    if(curTime > lst + 3600*24) {
+    if(curTime > lst + 3600*24*1000) {
         window.localStorage.setItem(key, curTime);
         var sendList = "";
         for(var i in pluginList) {
