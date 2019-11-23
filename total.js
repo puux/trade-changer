@@ -104,6 +104,11 @@ function switchTotalResDlg() {
               cryStr = '<a' + (overflowC ? ' style="color:#FF6A6A;"' : '') + cryStr.substring(2);
               uranStr = '<a' + (overflowU ? ' style="color:#FF6A6A;"' : '') + uranStr.substring(2);
             }
+            else {
+              metalStr = metalStr.replace(/<\/font>0/, "");
+              cryStr = cryStr.replace(/<\/font>0/, "");
+              uranStr = uranStr.replace(/<\/font>0/, "");
+            }
             text += '<tr>\
                   <th>' + (i == 1 ? "" : images.childNodes[i].innerHTML.replace(/^[0-9]{1,2}/, "").replace("zeroAbsolute", "").replace(/style="width:(.*)px;"/, 'style="width: 16px; height: 16px; background-size: 32px; display: inline-block;"').replace('class="marg"', 'class="marg" style="width: 20px;"').replace("overview", "buildings")) + '</th>\
                   <th>' + node.childNodes[i].innerHTML + '</th>\
