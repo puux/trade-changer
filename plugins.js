@@ -20,6 +20,7 @@ var pluginList = [
 var pluginListBeta = [
     { name: "chat", url: "10322-plaginy-k-igre", title: "Чат XGame", info: "Обычный чат с отображением пользователей online и возможностью создать свой канал для общения вдвоем или с несколькими участниками сразу" },
     { name: "targetlist", url: "10322-plaginy-k-igre", title: "Список целей", info: "Ведет учет целей для атаки с подсчетом вывозимых ресурсов и силы" },
+    { name: "sensor", url: "10322-plaginy-k-igre", title: "Сканирование системы", info: "Позволяет сканировать все планеты в системе за раз на предмет летящих флотов" },
 ];
 
 function isBetaTester() {
