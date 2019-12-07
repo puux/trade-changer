@@ -1,4 +1,26 @@
-if(!isNewStyle) {
+var mainMenuOptions = {
+  columns: 1,
+  action: 0
+};
+
+var mainMenuStyles = '<style>\
+.tools-menu[columns-2] { left: -288px !important; width: 324px !important; }\
+.tools-menu[columns-2] .item { width: 145px !important; }\
+</style>';
+
+function clickMainMenuHeader() {
+  if(mainMenuOptions.action == 1) {
+    window.location = "overview.php";
+  }
+}
+
+if(window.localStorage[mainmenuStorageKey()]) {
+  var data = JSON.parse(window.localStorage[mainmenuStorageKey()]);
+  mainMenuOptions.columns = data.columns;
+  mainMenuOptions.action = data.action;
+}
+
+function xgInjectMainMenu() {
   var bar = $(".menu-item").parent();
 
   var arr = $(".menu-item select");
@@ -9,8 +31,8 @@ if(!isNewStyle) {
   var itemIndex = 0;
   var currentIconStyle = "";
   var headerTitle = "";
-  for(var i = 0; i < arr[0].childNodes.length; i++) {
-    var node = arr[0].childNodes[i];
+  for(var nIndex = 0; nIndex < arr[0].childNodes.length; nIndex++) {
+    var node = arr[0].childNodes[nIndex];
     if(node.tagName == "OPTION") {
       var current = arr[0].selectedIndex == itemIndex;
       var planetName = node.innerHTML;
@@ -28,8 +50,8 @@ if(!isNewStyle) {
         if(tagOpened) {
           planets += '<div class="moon-empty"></div></div>';
         }
-        var b = 32*(parseInt(node.getAttribute("y"))/44);
-        var style = node.getAttribute("y") ? 'background-position-y: ' + b + 'px;' : "background-size: 32px;";
+        var offsetY = 32*(parseInt(node.getAttribute("y"))/44);
+        var style = node.getAttribute("y") ? 'background-position-y: ' + offsetY + 'px;' : "background-size: 32px;";
         var image = node.getAttribute("image");
         if(image != "/mini_planets.png")
           style += 'background-image: url(\'' + image + '\');';
@@ -101,15 +123,15 @@ if(!isNewStyle) {
       { icon: "icon-rules", url: "rules.php", title: "Правила"},
       { icon: "icon-news", url: "news.php", title: "Обновления"},
       { icon: "icon-messages", url: "messages.php?id=admin", title: "Администрация"},
-      { icon: "icon-forum", url: "../forum/", title: "Форум"},
-      { icon: "icon-vk", url: "../vk/", title: "ВКонтакте"},
-      { icon: "icon-spellage", url: "../spellage/", title: "Spellage"},
+      { icon: "icon-forum", url: "../forum/", title: "Форум", blank: true},
+      { icon: "icon-vk", url: "../vk/", title: "ВКонтакте", blank: true},
+      { icon: "icon-spellage", url: "../spellage/", title: "Spellage", blank: true},
       { icon: "icon-logout", url: "logout.php", title: "Выход"},
   ];
 
-  var commands = '<div class="tools-menu"><div class="content">';
-  for(var i in cmdItems)
-      commands += '<a class="item std-box" href="' + cmdItems[i].url + '"><div><div class="' + cmdItems[i].icon + '"></div></div>' + cmdItems[i].title + '</a>';
+  var commands = '<div class="tools-menu" ' + (mainMenuOptions.columns == 0 ? " columns-2" : "") + '><div class="content">';
+  for(var cIndex in cmdItems)
+      commands += '<a class="item std-box" href="' + cmdItems[cIndex].url + '"' + (cmdItems[cIndex].blank ? ' target="_blank"' : '') + '><div><div class="' + cmdItems[cIndex].icon + '"></div></div>' + cmdItems[cIndex].title + '</a>';
   commands += '</div></div>';
 
   window.xgShowRightMenu = function() {
@@ -132,5 +154,47 @@ if(!isNewStyle) {
   }
 
   bar.removeClass("row").addClass("main-menu").parent().css("overflow", "inherit");
-  bar.html('<div class="leftmenu" onclick="window.xgShowLeftMenu();"><div class="leftmenu-icon" style="' + currentIconStyle + '">' + planets + '</div></div><div class="time" style="display: flex; padding: 0 14px; align-items: center; text-shadow: 2px 2px 2px black;"><div>' + headerTitle + '</div><span id="times" style="flex-grow: 1; text-align: right;">00:00:00</span></div><div class="rightmenu" onclick="window.xgShowRightMenu();"><div class="rightmenu-icon" style="background-image: url(https://xgame.f2h.ru/img/menu.png)">' + commands + '</div></div>');
+  bar.html(mainMenuStyles + '<div class="leftmenu" onclick="window.xgShowLeftMenu();"><div class="leftmenu-icon" style="' + currentIconStyle + '">' + planets + '</div></div><div class="time" onclick="clickMainMenuHeader()" style="cursor: pointer; display: flex; padding: 0 14px; align-items: center; text-shadow: 2px 2px 2px black;"><div>' + headerTitle + '</div><span id="times" style="flex-grow: 1; text-align: right;">00:00:00</span></div><div class="rightmenu" onclick="window.xgShowRightMenu();"><div class="rightmenu-icon" style="background-image: url(https://xgame.f2h.ru/img/menu.png)">' + commands + '</div></div>');
 }
+
+if(!isNewStyle)
+  xgInjectMainMenu();
+
+function mainmenuStorageKey() {
+  return "xg_mainmenu_" + universe;
+}
+
+function saveMainMenuOptions() {
+  window.localStorage[mainmenuStorageKey()] = JSON.stringify(mainMenuOptions);
+}
+
+function mainMenuOptionsDialog(){
+  if(!document.getElementById("mainmenu-params"))
+    dlgCreate("mainmenu-params");
+  dlgShow("mainmenu-params");
+
+  var text = '<table style="width: 100%;" cellspacing="1">\
+          <tr><td class="c" colspan="2" style="height: 20px;"><div style="display: flex;"><div style="flex-grow: 1; cursor: move; user-select: none;" onmousedown="dlgBeginMove(event, \'mainmenu-params\')">Настройки</div><div class="close-btn" title="Закрыть форму" onclick="dlgHide(\'mainmenu-params\')"></div></div></td></tr>\
+          <tr><th colspan="2"></th></tr>\
+          <tr><th>Колонок в меню</th><th><select id="param-1"><option value="0">2</option><option value="1">3</option></select></th></tr>\
+          <tr><th>Клик по шапке</th><th><select id="param-2"><option value="0">(не задано)</option><option value="1">Перейти в Обзор</option></select></th></tr>\
+          <tr><th colspan="2"></th></tr>';
+  
+  text += '</table>';     
+  $("#mainmenu-params").css("width", "320px").html(text);
+  $("#param-1").val(mainMenuOptions.columns).on("input", function(e){
+    mainMenuOptions.columns = $("#param-1").val();
+    saveMainMenuOptions();
+    if(mainMenuOptions.columns == 0)
+      $(".tools-menu").attr("columns-2", "");
+    else
+      $(".tools-menu").removeAttr("columns-2");
+  });
+  $("#param-2").val(mainMenuOptions.action).on("input", function(e){
+    mainMenuOptions.action = $("#param-2").val();
+    saveMainMenuOptions();
+  });
+}
+
+if(window.enableOptionsButton)
+  window.enableOptionsButton("mainmenu", mainMenuOptionsDialog);
