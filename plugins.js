@@ -4,7 +4,7 @@ $('head').append('<link rel="stylesheet" href="https://xgame.f2h.ru/plugins.css?
 
 var pluginList = [
     { name: "labnet", url: "10317-uluchshenie-ui-issledovatelskaya-set", title: "Исследовательская сеть", info: "Наглядно отображает все доступные лаборатории империи, их уровни, а так же вхождение в исследовательскую сеть<br><br>Активация по клавише <b>H</b>" },
-    { name: "sim", url: "10288-uluchshenie-ui-chitabelnost-poley-v-simulyatore", title: "Улучшение симулятора", info: "Форматирование чисел и расширение полей ввода" },
+//    { name: "sim", url: "10288-uluchshenie-ui-chitabelnost-poley-v-simulyatore", title: "Улучшение симулятора", info: "Форматирование чисел и расширение полей ввода" },
     { name: "total", url: "10286-uluchshenie-ui-svodnaya-tablitsa-po-resursam", title: "Сводка ресурсов", info: "Отображает в табличном виде ресурсы со всех планет<br><br>Активация по клавише <b>G</b>" },
     { name: "trade", url: "10283-uluchshenie-ui-razdela-torgovlya", title: "Улучшение торга", info: "Делает форму создания лота в меню Торговля более удобной и информативной" },
     { name: "exptime", url: "10359-plagin-vremya-poleta-v-ekspeditsii", title: "Время в экспедиции", info: "Отображает реальное время, которое флот проведет в экспедиции, в выпадающем списке формы отправки флота, а так же запоминает последний выбор" },
@@ -39,6 +39,18 @@ function savePlugins() {
     }
     window.localStorage.setItem(XG_PLUGIN_AMOUNT_KEY, pluginList.length);
     document.location.reload();
+}
+
+function enableOptionsButton(name, func) {
+    for(var i in pluginList) {
+        if(pluginList[i].name == name) {
+            pluginList[i].options = func;
+        }
+    }
+}
+
+function showPluginOptions(index) {
+    pluginList[index].options();
 }
 
 /********************************************************************************** 
@@ -121,8 +133,10 @@ function injectOptions(oldStyle) {
         var text = "";
         for(var i in pluginList) {
             if(!pluginList[i].user || userID == pluginList[i].user)
+                var opt = pluginList[i].options ? '<div onclick="showPluginOptions(' + i + ')" class="icons_min icons_min_change" style="display: inline-block;" title="Открыть настройки плагина">&nbsp;</div>' : '-';
                 text += '<tr>\
                     <th onmouseover="return overlib(\'<table width=200><tr><td class=h><font color=#CDB5CD>' + pluginList[i].info + '</font></td></tr></table>\');" onmouseout="return nd();">' + pluginList[i].title + '</th>\
+                    <th>' + opt + '</th>\
                     <th><a target="_blank" title="Обсудить дополнение на форуме XGame" href="https://forum.xgame-online.com/topic/' + pluginList[i].url + '/"><div class="icons_min icons_min_info">&nbsp;</div></a></th>\
                     <th style="width: 20px;"><input type="checkbox" style="cursor: pointer;" id="p_' + pluginList[i].name + '"></th>\
                     </tr>';
@@ -134,13 +148,13 @@ function injectOptions(oldStyle) {
         }
         doc.width = 570;
         doc.className = "shadow-hover";
-        doc.innerHTML = '<tr><th colspan="3"><a name="pluglist" id="pluglist"></a></th></tr>\
-            <tr><td colspan="3" class="c" style="color: #EEDC82;">Плагины для дополнительных удобств</td></tr>\
-            <tr><th colspan="3"></th></tr>\
-            <tr><th colspan="3" style="color: #CDB5CD; padding: 0 20px;">В этом разделе собраны плагины от сторонних разработчиков, которые улучшают или дополняют те или иные части интерфейса игры в браузере. Количество плагинов: <span style="color: rgb(255, 165, 0);">' + pluginList.length + '</span></th></tr>\
-            <tr><th colspan="3"></th></tr>' + text + '<tr><th colspan="3"></th></tr>\
-            <tr><td colspan="3" class="c"><button onclick="savePlugins()" style="cursor: pointer;">[ Сохранить настройки плагинов ]</button></td></tr>\
-            <tr><th colspan="3"></th></tr>';
+        doc.innerHTML = '<tr><th colspan="4"><a name="pluglist" id="pluglist"></a></th></tr>\
+            <tr><td colspan="4" class="c" style="color: #EEDC82;">Плагины для дополнительных удобств</td></tr>\
+            <tr><th colspan="4"></th></tr>\
+            <tr><th colspan="4" style="color: #CDB5CD; padding: 0 20px;">В этом разделе собраны плагины от сторонних разработчиков, которые улучшают или дополняют те или иные части интерфейса игры в браузере. Количество плагинов: <span style="color: rgb(255, 165, 0);">' + pluginList.length + '</span></th></tr>\
+            <tr><th colspan="4"></th></tr>' + text + '<tr><th colspan="4"></th></tr>\
+            <tr><td colspan="4" class="c"><input type="submit" onclick="savePlugins()" value="[ Сохранить настройки плагинов ]"></td></tr>\
+            <tr><th colspan="4"></th></tr>';
         var splitter = document.createElement("div");
         splitter.id = "br";
         if(oldStyle) {
@@ -256,7 +270,7 @@ $(document).ready(function () {
         else
             text += '<tr><th>Вы знаете о том, что в настройках игры есть раздел с плагинами, подключая которые вы можете менять и улучшать те или иные части интерфейса игры?</th></tr>';
     
-        text += '<tr><th></th></tr><tr><td class="c" style="padding: 3px;"><button style="cursor: pointer;" onclick="xgOpenPluginSettings()">Настроить плагины</button></td></tr>\
+        text += '<tr><th></th></tr><tr><td class="c" style="padding: 3px;"><input type="submit" onclick="xgOpenPluginSettings()" title="Настроить плагины"></td></tr>\
                 </table>';
         $("#xg-plug-info").html(text);
         dlgShow("xg-plug-info");
