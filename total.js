@@ -171,3 +171,6 @@ else {
   totalDlg.id = "res-panel";
   document.body.appendChild(totalDlg);
 }
+
+if(window.enableOptionsButton)
+  window.enableOptionsButton("total", paramsResDlg);
