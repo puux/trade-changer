@@ -45,12 +45,17 @@ function enableOptionsButton(name, func) {
     for(var i in pluginList) {
         if(pluginList[i].name == name) {
             pluginList[i].options = func;
+            $("#plug-opt-" + name).css("display", "inline-block");
         }
     }
 }
 
 function showPluginOptions(index) {
     pluginList[index].options();
+}
+
+function pad(value) {
+    return String(value).split(/(?=(?:...)*$)/).join(" ");
 }
 
 /********************************************************************************** 
@@ -132,14 +137,15 @@ function injectOptions(oldStyle) {
     if(arr.length && arr[0].value == "[ Сохранить изменения ]" && $("input[name=zakazBAN]").length) {
         var text = "";
         for(var i in pluginList) {
-            if(!pluginList[i].user || userID == pluginList[i].user)
-                var opt = pluginList[i].options ? '<div onclick="showPluginOptions(' + i + ')" class="icons_min icons_min_change" style="display: inline-block;" title="Открыть настройки плагина">&nbsp;</div>' : '-';
+            if(!pluginList[i].user || userID == pluginList[i].user) {
+                var opt = '<div id="plug-opt-' + pluginList[i].name + '" onclick="showPluginOptions(' + i + ')" class="icons_min icons_min_change" style="display: ' + (pluginList[i].options ? 'inline-block' : '') + ';" title="Открыть настройки плагина">&nbsp;</div>';
                 text += '<tr>\
                     <th onmouseover="return overlib(\'<table width=200><tr><td class=h><font color=#CDB5CD>' + pluginList[i].info + '</font></td></tr></table>\');" onmouseout="return nd();">' + pluginList[i].title + '</th>\
                     <th>' + opt + '</th>\
                     <th><a target="_blank" title="Обсудить дополнение на форуме XGame" href="https://forum.xgame-online.com/topic/' + pluginList[i].url + '/"><div class="icons_min icons_min_info">&nbsp;</div></a></th>\
                     <th style="width: 20px;"><input type="checkbox" style="cursor: pointer;" id="p_' + pluginList[i].name + '"></th>\
                     </tr>';
+            }
         }
 
         var doc = document.createElement("table");
