@@ -15,12 +15,12 @@ var pluginList = [
     { name: "allykasse", url: "10682-plagin-vklady-v-sklad-alyansa", title: "Вклады в альянс", info: "Проверяет доступность вклада в альняс с текущей планеты и позволяет выполнить его одним кликом с удобной настройкой количества вкладываемых ресурсов" },
     { name: "mainmenu", url: "10714-plagin-glavnoe-menyu", title: "Главное меню", info: "Заменяет выпадающий список планет и разделов в мобильной и старой версии на более компактное и удобное меню" },
     { name: "alysab", url: "10715-plagin-sab-s-alyansom", title: "САБ с альянсом", info: "Позволяет быстро добавлять членов яльянса в САБ, выбирая их ники из выпадающего списка" },
+    { name: "sensor", url: "10322-plaginy-k-igre", title: "Сканирование системы", info: "Позволяет сканировать все планеты в системе за раз на предмет летящих флотов" },
 ];
 
 var pluginListBeta = [
     { name: "chat", url: "10322-plaginy-k-igre", title: "Чат XGame", info: "Обычный чат с отображением пользователей online и возможностью создать свой канал для общения вдвоем или с несколькими участниками сразу" },
     { name: "targetlist", url: "10322-plaginy-k-igre", title: "Список целей", info: "Ведет учет целей для атаки с подсчетом вывозимых ресурсов и силы" },
-    { name: "sensor", url: "10322-plaginy-k-igre", title: "Сканирование системы", info: "Позволяет сканировать все планеты в системе за раз на предмет летящих флотов" },
 ];
 
 function isBetaTester() {
@@ -138,7 +138,7 @@ function injectOptions(oldStyle) {
         var text = "";
         for(var i in pluginList) {
             if(!pluginList[i].user || userID == pluginList[i].user) {
-                var opt = '<div id="plug-opt-' + pluginList[i].name + '" onclick="showPluginOptions(' + i + ')" class="icons_min icons_min_change" style="display: ' + (pluginList[i].options ? 'inline-block' : '') + ';" title="Открыть настройки плагина">&nbsp;</div>';
+                var opt = '<div id="plug-opt-' + pluginList[i].name + '" onclick="showPluginOptions(' + i + ')" class="icons_min icons_min_change" style="display: ' + (pluginList[i].options ? 'inline-block' : 'none') + ';" title="Открыть настройки плагина">&nbsp;</div>';
                 text += '<tr>\
                     <th onmouseover="return overlib(\'<table width=200><tr><td class=h><font color=#CDB5CD>' + pluginList[i].info + '</font></td></tr></table>\');" onmouseout="return nd();">' + pluginList[i].title + '</th>\
                     <th>' + opt + '</th>\
