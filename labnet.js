@@ -1,34 +1,6 @@
 var panelLabShow = false;
 var impLab = null;
 
-var zIndex = 16;
-var moveObject = null;
-var __sliderDragObj = null;
-function _formMove(event) {
-  if(moveObject) {
-    var deltaX = Math.max(0, __sliderDragObj.l - (__sliderDragObj.x - event.clientX));
-    moveObject.style.left = deltaX.toString() + "px";
-    var deltaY = Math.max(0, __sliderDragObj.t  - (__sliderDragObj.y - event.clientY));
-	  moveObject.style.top = deltaY.toString() + "px";
-  }
-}
-
-function _formMoveUp() {
-  document.removeEventListener("mousemove", _formMove);
-  document.removeEventListener("mouseup", _formMoveUp);
-  window.localStorage["pos_x_" + moveObject.id] = moveObject.style.left;
-  window.localStorage["pos_y_" + moveObject.id] = moveObject.style.top;
-  moveObject = null;
-}
-
-function beginMove(event, obj) {
-  moveObject = document.getElementById(obj);
-  moveObject.style.zIndex = zIndex++;
-  __sliderDragObj = {x: event.clientX, y: event.clientY, l: moveObject.offsetLeft, t: moveObject.offsetTop};
-  document.addEventListener("mousemove", _formMove);
-	document.addEventListener("mouseup", _formMoveUp);
-}
-
 function switchLabPanel() {
   panelLabShow = !panelLabShow;
   if(panelLabShow) {
@@ -65,7 +37,7 @@ function switchLabPanel() {
         var labSci = oldStyle ? '' : 'index.php#';
         
         var text = '<table style="width: 100%;" cellspacing="1">\
-        <tr><td class="c" colspan="3" style="height: 20px;"><div style="display: flex;"><div style="flex-grow: 1; cursor: move; user-select: none;" onmousedown="beginMove(event, \'lab-panel\')">Исследовательская сеть</div><div class="close-btn" title="Закрыть форму" onclick="switchLabPanel()"></div></div></td></tr>\
+        <tr><td class="c" colspan="3" style="height: 20px;"><div style="display: flex;"><div style="flex-grow: 1; cursor: move; user-select: none;" onmousedown="dlgBeginMove(event, \'lab-panel\')">Исследовательская сеть</div><div class="close-btn" title="Закрыть форму" onclick="switchLabPanel()"></div></div></td></tr>\
               <tr><th colspan="3"></th></tr>';
         if(labIndex > 0) {
           var lab = doc.getElementById("planet_koord").parentNode.childNodes[labIndex];
@@ -114,7 +86,7 @@ function switchLabPanel() {
           <tr><th colspan="2"><a href="' + labSci + 'user.php?art=art_academy">Академии</a></th><th style="color: orange;">' + academy + '</th></tr>\
           <tr><th colspan="3"></th></tr>\
           <tr><td colspan="2" class="c">Суммарный уровень лабораторий</td><td class="c">' + totalLevel + '</td></table>';
-        labDlg.innerHTML = text;
+          $("#lab-panel").html(text);
       };
       document.body.appendChild(impLab);
     }
@@ -129,12 +101,5 @@ document.addEventListener("keydown", function(e){
   }
 });
 
-var labDlg = document.createElement("div");
-labDlg.setAttribute('style', 'width: 255px; position: fixed; left: 40%; top: 15%; z-index: 16; box-shadow: 0 0 5px 0px black; background-color: black; display: none;');
-labDlg.id = "lab-panel";
-document.body.appendChild(labDlg);
-
-if(window.localStorage["pos_x_" + labDlg.id]) {
-  labDlg.style.left = window.localStorage["pos_x_" + labDlg.id];
-  labDlg.style.top = window.localStorage["pos_y_" + labDlg.id];
-}
+dlgCreate("lab-panel");
+$("#lab-panel").css("width", "250px");
