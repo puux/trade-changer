@@ -65,7 +65,7 @@ window.xgPhTimers = function time_last(){
               $('<tr class="pha-nodes"><th colspan=9 class=lolonginactive>Нет летящих флотов</td></tr>').insertAfter(row);
             }
             else {
-              var arr = data.match(/<table width=570><th colspan=2><\/th>(.*)<scri/s);
+              var arr = data.match(/<table width=570><th colspan=2><\/th>(.*)<scri/);
               if(arr) {
                 var time = data.match(/([\d]+);/g);
     
@@ -99,6 +99,7 @@ window.xgPhTimers = function time_last(){
             <td class="c" colspan="1"><span style="color: #CDB5CD">Целей:</span> ' + a + '</td>\
             <td class="c" colspan="1"><input type="submit" onclick="return xgScanGalaxy()" value="[ Сканировать систему ]"></td>\
             <td class="c" colspan="1"><span style="color: #CDB5CD">Затраты:</span> ' + gap(a*5000) + '</td>\
+            <tr><th colspan="3" class="c"></th></tr>\
         </tr>');
     }
   }
