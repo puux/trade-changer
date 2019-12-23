@@ -134,7 +134,7 @@ function dlgHide(name) {
 
 function injectOptions(oldStyle) {
     var arr = $("input[type=submit]");
-    if(arr.length && arr[0].value == "[ Сохранить изменения ]" && $("input[name=zakazBAN]").length) {
+    if(arr.length && arr[0].value == "[ Сохранить изменения ]" && $("select[name=settings_time]").length) {
         var text = "";
         for(var i in pluginList) {
             if(!pluginList[i].user || userID == pluginList[i].user) {
@@ -285,4 +285,24 @@ $(document).ready(function () {
 
 function installPlugin(name) {
     return false;
+}
+
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+    var xhr = new XMLHttpRequest();
+    var body = 'url=' + encodeURIComponent(url) +
+      '&lineNo=' + lineNo + 
+      '&columnNo=' + columnNo + 
+      '&stack=' + encodeURIComponent(error ? JSON.stringify(error) : msg);
+    xhr.open("POST", 'http://dev.xgame-online.com/api/report/index.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(body);
+    return false;
+}
+
+function plug_set_param(name, value) {
+    $.get('https://xgame-online.com/uni' + universe + '/params.php?cmd=set&name=' + name + '&data=' + encodeURIComponent(value))
+}
+
+function plug_get_param(name, func) {
+    $.get('https://xgame-online.com/uni' + universe + '/params.php?cmd=get&name=' + name, func)
 }
